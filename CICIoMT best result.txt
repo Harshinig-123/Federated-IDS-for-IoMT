@@ -1,0 +1,385 @@
+ python kl+crps.py
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.
+No GPU — CPU mode
+Logging to: C:\Users\sandh\Downloads\CICIoMT\attacks/run_kl_crps16_20260429_080451.txt
+TF: 2.21.0
+Loading train...
+  OK [TRAIN] — all 16 classes present
+  Class counts [TRAIN]:
+    ARP_Spoofing: 16047
+    Benign: 192732
+    DDoS-ICMP: 1537476
+    DDoS-SYN: 801962
+    DDoS-TCP: 804465
+    DDoS-UDP: 1635956
+    DoS-ICMP: 416292
+    DoS-SYN: 441903
+    DoS-TCP: 380384
+    DoS-UDP: 566950
+    MQTT-DDoS-Connect_Flood: 173036
+    MQTT-DDoS-Publish_Flood: 27623
+    MQTT-DoS-Connect_Flood: 12773
+    MQTT-DoS-Publish_Flood: 44376
+    MQTT-Malformed_Data: 5130
+    Recon: 103726
+
+Node 1 subsampling:
+    Subsample result (399,993 total):
+      ARP_Spoofing: 868
+      Benign: 10,435
+      DDoS-ICMP: 83,245
+      DDoS-SYN: 43,421
+      DDoS-TCP: 43,557
+      DDoS-UDP: 88,577
+      DoS-ICMP: 22,539
+      DoS-SYN: 23,926
+      DoS-TCP: 20,595
+      DoS-UDP: 30,697
+      MQTT-DDoS-Connect_Flood: 9,368
+      MQTT-DDoS-Publish_Flood: 9,019
+      MQTT-DoS-Connect_Flood: 4,035
+      MQTT-DoS-Publish_Flood: 2,402
+      MQTT-Malformed_Data: 1,693
+      Recon: 5,616
+
+Node 2 subsampling:
+    Subsample result (399,992 total):
+      ARP_Spoofing: 868
+      Benign: 10,434
+      DDoS-ICMP: 83,236
+      DDoS-SYN: 43,417
+      DDoS-TCP: 43,552
+      DDoS-UDP: 88,567
+      DoS-ICMP: 22,537
+      DoS-SYN: 23,923
+      DoS-TCP: 20,593
+      DoS-UDP: 30,693
+      MQTT-DDoS-Connect_Flood: 9,367
+      MQTT-DDoS-Publish_Flood: 9,040
+      MQTT-DoS-Connect_Flood: 4,045
+      MQTT-DoS-Publish_Flood: 2,402
+      MQTT-Malformed_Data: 1,703
+      Recon: 5,615
+
+Node 3 subsampling:
+    Subsample result (399,991 total):
+      ARP_Spoofing: 868
+      Benign: 10,434
+      DDoS-ICMP: 83,236
+      DDoS-SYN: 43,416
+      DDoS-TCP: 43,552
+      DDoS-UDP: 88,567
+      DoS-ICMP: 22,537
+      DoS-SYN: 23,923
+      DoS-TCP: 20,593
+      DoS-UDP: 30,693
+      MQTT-DDoS-Connect_Flood: 9,367
+      MQTT-DDoS-Publish_Flood: 9,041
+      MQTT-DoS-Connect_Flood: 4,045
+      MQTT-DoS-Publish_Flood: 2,402
+      MQTT-Malformed_Data: 1,702
+      Recon: 5,615
+
+Loading test...
+  OK [TEST] — all 16 classes present
+  Class counts [TEST]:
+    ARP_Spoofing: 1744
+    Benign: 37607
+    DDoS-ICMP: 349699
+    DDoS-SYN: 172397
+    DDoS-TCP: 182598
+    DDoS-UDP: 362070
+    DoS-ICMP: 98432
+    DoS-SYN: 98595
+    DoS-TCP: 82096
+    DoS-UDP: 137553
+    MQTT-DDoS-Connect_Flood: 41916
+    MQTT-DDoS-Publish_Flood: 8416
+    MQTT-DoS-Connect_Flood: 3131
+    MQTT-DoS-Publish_Flood: 8505
+    MQTT-Malformed_Data: 1747
+    Recon: 27676
+
+Ready — features:75  classes:16
+RAM: 72.1%
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1777430637.553132   31028 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 AVX512F AVX512_VNNI FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+============================================================
+  Adaptive FL — MLP + KL+CRPS — 16 Classes (Recon merged)
+  E:[1,4]  BatchSize:[128,512]  Patience:6
+  Loss: 70% KL Divergence + 30% CRPS
+============================================================
+
+-- Round 1/20 --
+  Node 1 — epochs:1 batch:512 loss:4.2920 acc:0.7057 val_acc:0.7801
+  Node 2 — epochs:1 batch:512 loss:4.2767 acc:0.7057 val_acc:0.7802
+  Node 3 — epochs:1 batch:512 loss:4.2903 acc:0.7056 val_acc:0.7803
+  Global — mu_acc:0.6611  F1:0.2247  DoS:0.0026  Score:0.1137
+  node_accs: ['0.6614', '0.6611', '0.6609']
+  DoS  : {'DoS-ICMP': '0.000', 'DoS-SYN': '0.011', 'DoS-TCP': '0.000', 'DoS-UDP': '0.000'}
+  DDoS : TCP=0.990  UDP=0.999  SYN=0.997  ICMP=1.000
+  MQTT : Connect=0.000  Publish=0.136  Malformed=0.000
+  Recon:0.000  Benign:0.024  ARP:0.000
+  Best saved — score:0.1137  F1:0.2247  DoS:0.0026
+
+-- Round 2/20 --
+  Node 1 — epochs:1 batch:512 loss:3.2734 acc:0.7670 val_acc:0.7916
+  Node 2 — epochs:1 batch:465 loss:3.2502 acc:0.7678 val_acc:0.7886
+  Node 3 — epochs:4 batch:128 loss:2.8128 acc:0.7879 val_acc:0.7978
+  Global — mu_acc:0.7261  F1:0.4445  DoS:0.1516  Score:0.2981
+  node_accs: ['0.7270', '0.7269', '0.7245']
+  DoS  : {'DoS-ICMP': '0.000', 'DoS-SYN': '0.134', 'DoS-TCP': '0.472', 'DoS-UDP': '0.000'}
+  DDoS : TCP=0.997  UDP=1.000  SYN=0.994  ICMP=1.000
+  MQTT : Connect=0.998  Publish=0.260  Malformed=0.000
+  Recon:0.037  Benign:0.021  ARP:0.000
+  Best saved — score:0.2981  F1:0.4445  DoS:0.1516
+
+-- Round 3/20 --
+  Node 1 — epochs:1 batch:512 loss:2.8424 acc:0.7866 val_acc:0.7983
+  Node 2 — epochs:1 batch:512 loss:2.8414 acc:0.7866 val_acc:0.7994
+  Node 3 — epochs:4 batch:128 loss:2.6699 acc:0.7952 val_acc:0.8001
+  Global — mu_acc:0.7843  F1:0.6036  DoS:0.4455  Score:0.5245
+  node_accs: ['0.7854', '0.7873', '0.7803']
+  DoS  : {'DoS-ICMP': '0.679', 'DoS-SYN': '0.604', 'DoS-TCP': '0.498', 'DoS-UDP': '0.000'}
+  DDoS : TCP=0.978  UDP=1.000  SYN=0.965  ICMP=0.606
+  MQTT : Connect=1.000  Publish=0.260  Malformed=0.023
+  Recon:0.854  Benign:0.855  ARP:0.000
+  !! WARNING: DDoS-ICMP dropped 1.000 -> 0.606
+  Best saved — score:0.5245  F1:0.6036  DoS:0.4455
+
+-- Round 4/20 --
+  Node 1 — epochs:1 batch:512 loss:2.6575 acc:0.7958 val_acc:0.8041
+  Node 2 — epochs:1 batch:512 loss:2.6530 acc:0.7957 val_acc:0.8025
+  Node 3 — epochs:4 batch:128 loss:2.5944 acc:0.7994 val_acc:0.8086
+  Global — mu_acc:0.7996  F1:0.6801  DoS:0.4811  Score:0.5806
+  node_accs: ['0.7995', '0.8001', '0.7993']
+  DoS  : {'DoS-ICMP': '0.654', 'DoS-SYN': '0.773', 'DoS-TCP': '0.496', 'DoS-UDP': '0.001'}
+  DDoS : TCP=0.986  UDP=0.999  SYN=0.946  ICMP=0.631
+  MQTT : Connect=1.000  Publish=0.215  Malformed=0.506
+  Recon:0.913  Benign:0.996  ARP:0.205
+  !! WARNING: DDoS-ICMP dropped 0.869 -> 0.631
+  Best saved — score:0.5806  F1:0.6801  DoS:0.4811
+
+-- Round 5/20 --
+  Node 1 — epochs:3 batch:303 loss:2.5249 acc:0.8032 val_acc:0.8110
+  Node 2 — epochs:1 batch:512 loss:2.5471 acc:0.8024 val_acc:0.8135
+  Node 3 — epochs:4 batch:128 loss:2.5532 acc:0.8018 val_acc:0.8066
+  Global — mu_acc:0.7973  F1:0.6871  DoS:0.5002  Score:0.5937
+  node_accs: ['0.7981', '0.7940', '0.7997']
+  DoS  : {'DoS-ICMP': '0.669', 'DoS-SYN': '0.807', 'DoS-TCP': '0.517', 'DoS-UDP': '0.008'}
+  DDoS : TCP=0.967  UDP=0.990  SYN=0.936  ICMP=0.586
+  MQTT : Connect=0.996  Publish=0.172  Malformed=0.608
+  Recon:0.915  Benign:0.970  ARP:0.438
+  !! WARNING: DDoS-ICMP dropped 0.809 -> 0.586
+  Best saved — score:0.5937  F1:0.6871  DoS:0.5002
+  Checkpoint saved
+
+-- Round 6/20 --
+  Node 1 — epochs:1 batch:512 loss:2.4721 acc:0.8059 val_acc:0.8136
+  Node 2 — epochs:4 batch:128 loss:2.5063 acc:0.8045 val_acc:0.8111
+  Node 3 — epochs:1 batch:512 loss:2.4702 acc:0.8061 val_acc:0.8139
+  Global — mu_acc:0.7918  F1:0.6870  DoS:0.4786  Score:0.5828
+  node_accs: ['0.7919', '0.7884', '0.7950']
+  DoS  : {'DoS-ICMP': '0.667', 'DoS-SYN': '0.718', 'DoS-TCP': '0.516', 'DoS-UDP': '0.013'}
+  DDoS : TCP=0.949  UDP=0.982  SYN=0.953  ICMP=0.536
+  MQTT : Connect=0.997  Publish=0.169  Malformed=0.643
+  Recon:0.914  Benign:0.956  ARP:0.516
+  !! WARNING: DDoS-ICMP dropped 0.765 -> 0.536
+  No improvement — patience 1/6
+
+-- Round 7/20 --
+  Node 1 — epochs:1 batch:512 loss:2.4382 acc:0.8076 val_acc:0.8151
+  Node 2 — epochs:4 batch:128 loss:2.4547 acc:0.8080 val_acc:0.8111
+  Node 3 — epochs:1 batch:512 loss:2.4366 acc:0.8080 val_acc:0.8061
+  Global — mu_acc:0.7960  F1:0.6901  DoS:0.4852  Score:0.5877
+  node_accs: ['0.7989', '0.7988', '0.7903']
+  DoS  : {'DoS-ICMP': '0.650', 'DoS-SYN': '0.767', 'DoS-TCP': '0.508', 'DoS-UDP': '0.016'}
+  DDoS : TCP=0.966  UDP=0.980  SYN=0.983  ICMP=0.599
+  MQTT : Connect=0.998  Publish=0.136  Malformed=0.672
+  Recon:0.917  Benign:0.939  ARP:0.602
+  No improvement — patience 2/6
+
+-- Round 8/20 --
+  Node 1 — epochs:1 batch:512 loss:2.4180 acc:0.8086 val_acc:0.8167
+  Node 2 — epochs:1 batch:512 loss:2.3929 acc:0.8116 val_acc:0.8128
+  Node 3 — epochs:4 batch:128 loss:2.4876 acc:0.8050 val_acc:0.8074
+  Global — mu_acc:0.7990  F1:0.6966  DoS:0.5141  Score:0.6053
+  node_accs: ['0.8031', '0.7954', '0.7986']
+  DoS  : {'DoS-ICMP': '0.619', 'DoS-SYN': '0.891', 'DoS-TCP': '0.502', 'DoS-UDP': '0.043'}
+  DDoS : TCP=0.983  UDP=0.958  SYN=0.961  ICMP=0.690
+  MQTT : Connect=0.992  Publish=0.119  Malformed=0.704
+  Recon:0.919  Benign:0.929  ARP:0.656
+  Best saved — score:0.6053  F1:0.6966  DoS:0.5141
+
+-- Round 9/20 --
+  Node 1 — epochs:1 batch:512 loss:2.4103 acc:0.8090 val_acc:0.7987
+  Node 2 — epochs:4 batch:128 loss:2.4287 acc:0.8092 val_acc:0.8134
+  Node 3 — epochs:1 batch:467 loss:2.4075 acc:0.8091 val_acc:0.7973
+  Global — mu_acc:0.7923  F1:0.6917  DoS:0.4883  Score:0.5900
+  node_accs: ['0.7971', '0.7938', '0.7859']
+  DoS  : {'DoS-ICMP': '0.636', 'DoS-SYN': '0.789', 'DoS-TCP': '0.498', 'DoS-UDP': '0.030'}
+  DDoS : TCP=0.983  UDP=0.962  SYN=0.963  ICMP=0.641
+  MQTT : Connect=0.995  Publish=0.116  Malformed=0.730
+  Recon:0.921  Benign:0.934  ARP:0.608
+  No improvement — patience 1/6
+
+-- Round 10/20 --
+  Node 1 — epochs:1 batch:512 loss:2.3967 acc:0.8098 val_acc:0.8055
+  Node 2 — epochs:1 batch:512 loss:2.3691 acc:0.8118 val_acc:0.8184
+  Node 3 — epochs:4 batch:128 loss:2.4728 acc:0.8057 val_acc:0.8104
+  Global — mu_acc:0.7894  F1:0.6932  DoS:0.4788  Score:0.5860
+  node_accs: ['0.7942', '0.7801', '0.7940']
+  DoS  : {'DoS-ICMP': '0.624', 'DoS-SYN': '0.765', 'DoS-TCP': '0.497', 'DoS-UDP': '0.029'}
+  DDoS : TCP=0.985  UDP=0.958  SYN=0.959  ICMP=0.679
+  MQTT : Connect=0.985  Publish=0.176  Malformed=0.716
+  Recon:0.922  Benign:0.939  ARP:0.630
+  No improvement — patience 2/6
+  Checkpoint saved
+
+-- Round 11/20 --
+  Node 1 — epochs:1 batch:512 loss:2.3903 acc:0.8099 val_acc:0.8171
+  Node 2 — epochs:4 batch:128 loss:2.4085 acc:0.8103 val_acc:0.8165
+  Node 3 — epochs:1 batch:512 loss:2.3808 acc:0.8108 val_acc:0.8154
+  Global — mu_acc:0.7868  F1:0.6872  DoS:0.4570  Score:0.5721
+  node_accs: ['0.7912', '0.7793', '0.7897']
+  DoS  : {'DoS-ICMP': '0.628', 'DoS-SYN': '0.679', 'DoS-TCP': '0.503', 'DoS-UDP': '0.018'}
+  DDoS : TCP=0.976  UDP=0.975  SYN=0.957  ICMP=0.611
+  MQTT : Connect=0.990  Publish=0.159  Malformed=0.705
+  Recon:0.919  Benign:0.944  ARP:0.599
+  No improvement — patience 3/6
+
+-- Round 12/20 --
+  Node 1 — epochs:1 batch:512 loss:2.3807 acc:0.8108 val_acc:0.8117
+  Node 2 — epochs:4 batch:128 loss:2.3811 acc:0.8121 val_acc:0.8190
+  Node 3 — epochs:1 batch:512 loss:2.3752 acc:0.8113 val_acc:0.8168
+  Global — mu_acc:0.7919  F1:0.6913  DoS:0.4784  Score:0.5849
+  node_accs: ['0.7982', '0.7862', '0.7914']
+  DoS  : {'DoS-ICMP': '0.602', 'DoS-SYN': '0.784', 'DoS-TCP': '0.502', 'DoS-UDP': '0.025'}
+  DDoS : TCP=0.981  UDP=0.971  SYN=0.964  ICMP=0.684
+  MQTT : Connect=0.993  Publish=0.132  Malformed=0.726
+  Recon:0.921  Benign:0.940  ARP:0.635
+  No improvement — patience 4/6
+
+-- Round 13/20 --
+  Node 1 — epochs:1 batch:512 loss:2.3764 acc:0.8106 val_acc:0.8126
+  Node 2 — epochs:4 batch:128 loss:2.3761 acc:0.8127 val_acc:0.8194
+  Node 3 — epochs:1 batch:477 loss:2.3728 acc:0.8111 val_acc:0.8158
+  Global — mu_acc:0.7965  F1:0.6999  DoS:0.4988  Score:0.5994
+  node_accs: ['0.8026', '0.7936', '0.7934']
+  DoS  : {'DoS-ICMP': '0.601', 'DoS-SYN': '0.860', 'DoS-TCP': '0.500', 'DoS-UDP': '0.034'}
+  DDoS : TCP=0.981  UDP=0.966  SYN=0.963  ICMP=0.690
+  MQTT : Connect=0.996  Publish=0.137  Malformed=0.721
+  Recon:0.922  Benign:0.947  ARP:0.611
+  No improvement — patience 5/6
+
+-- Round 14/20 --
+  Node 1 — epochs:1 batch:512 loss:2.3687 acc:0.8114 val_acc:0.8150
+  Node 2 — epochs:4 batch:142 loss:2.3601 acc:0.8131 val_acc:0.8189
+  Node 3 — epochs:4 batch:128 loss:2.4527 acc:0.8066 val_acc:0.8126
+  Global — mu_acc:0.7821  F1:0.6800  DoS:0.4326  Score:0.5563
+  node_accs: ['0.7851', '0.7740', '0.7872']
+  DoS  : {'DoS-ICMP': '0.615', 'DoS-SYN': '0.590', 'DoS-TCP': '0.508', 'DoS-UDP': '0.018'}
+  DDoS : TCP=0.967  UDP=0.976  SYN=0.956  ICMP=0.649
+  MQTT : Connect=0.991  Publish=0.141  Malformed=0.728
+  Recon:0.921  Benign:0.951  ARP:0.573
+  No improvement — patience 6/6
+
+-- Round 15/20 --
+  Node 1 — epochs:1 batch:512 loss:2.3652 acc:0.8110 val_acc:0.8141
+  Node 2 — epochs:4 batch:128 loss:2.3542 acc:0.8137 val_acc:0.8207
+  Node 3 — epochs:1 batch:512 loss:2.3523 acc:0.8121 val_acc:0.8154
+  Global — mu_acc:0.7922  F1:0.6929  DoS:0.4772  Score:0.5850
+  node_accs: ['0.7984', '0.7890', '0.7892']
+  DoS  : {'DoS-ICMP': '0.601', 'DoS-SYN': '0.791', 'DoS-TCP': '0.498', 'DoS-UDP': '0.020'}
+  DDoS : TCP=0.984  UDP=0.973  SYN=0.962  ICMP=0.683
+  MQTT : Connect=0.996  Publish=0.158  Malformed=0.761
+  Recon:0.928  Benign:0.936  ARP:0.587
+  No improvement — patience 7/6
+  Early stopping at round 15
+
+Metrics saved to: metrics_kl_crps16_20260429_080451.csv
+
+=== Final Evaluation ===
+
+=== Node 1 ===
+                         precision    recall  f1-score   support
+
+           ARP_Spoofing       0.27      0.66      0.38       576
+                 Benign       0.93      0.93      0.93     12410
+              DDoS-ICMP       0.87      0.69      0.77    115401
+               DDoS-SYN       0.94      0.96      0.95     56891
+               DDoS-TCP       0.81      0.98      0.89     60257
+               DDoS-UDP       0.72      0.96      0.83    119483
+               DoS-ICMP       0.36      0.62      0.46     32483
+                DoS-SYN       0.93      0.89      0.91     32536
+                DoS-TCP       0.92      0.50      0.65     27092
+                DoS-UDP       0.28      0.04      0.08     45393
+MQTT-DDoS-Connect_Flood       1.00      0.99      0.99     13832
+MQTT-DDoS-Publish_Flood       0.87      0.12      0.21      2777
+ MQTT-DoS-Connect_Flood       0.90      0.97      0.93      1033
+ MQTT-DoS-Publish_Flood       0.53      1.00      0.70      2807
+    MQTT-Malformed_Data       0.82      0.70      0.76       577
+                  Recon       1.00      0.92      0.96      9133
+
+               accuracy                           0.77    532681
+              macro avg       0.76      0.75      0.71    532681
+           weighted avg       0.77      0.77      0.75    532681
+
+  Report saved to: report_klcrps_node1_20260429_080451.txt
+
+=== Node 2 ===
+                         precision    recall  f1-score   support
+
+           ARP_Spoofing       0.27      0.67      0.39       584
+                 Benign       0.93      0.93      0.93     12599
+              DDoS-ICMP       0.87      0.69      0.77    117149
+               DDoS-SYN       0.93      0.96      0.95     57753
+               DDoS-TCP       0.81      0.98      0.89     61170
+               DDoS-UDP       0.72      0.96      0.83    121293
+               DoS-ICMP       0.36      0.62      0.45     32974
+                DoS-SYN       0.93      0.88      0.90     33029
+                DoS-TCP       0.92      0.50      0.64     27502
+                DoS-UDP       0.28      0.04      0.07     46080
+MQTT-DDoS-Connect_Flood       1.00      0.75      0.86     14042
+MQTT-DDoS-Publish_Flood       0.84      0.11      0.20      2820
+ MQTT-DoS-Connect_Flood       0.23      0.97      0.37      1049
+ MQTT-DoS-Publish_Flood       0.53      1.00      0.69      2849
+    MQTT-Malformed_Data       0.86      0.73      0.79       585
+                  Recon       1.00      0.92      0.96      9272
+
+               accuracy                           0.76    540750
+              macro avg       0.72      0.73      0.67    540750
+           weighted avg       0.76      0.76      0.74    540750
+
+  Report saved to: report_klcrps_node2_20260429_080451.txt
+
+=== Node 3 ===
+                         precision    recall  f1-score   support
+
+           ARP_Spoofing       0.28      0.68      0.39       584
+                 Benign       0.93      0.93      0.93     12598
+              DDoS-ICMP       0.87      0.68      0.76    117149
+               DDoS-SYN       0.91      0.97      0.93     57753
+               DDoS-TCP       0.81      0.98      0.89     61171
+               DDoS-UDP       0.72      0.96      0.82    121294
+               DoS-ICMP       0.36      0.63      0.46     32975
+                DoS-SYN       0.94      0.82      0.88     33030
+                DoS-TCP       0.92      0.50      0.64     27502
+                DoS-UDP       0.28      0.04      0.08     46080
+MQTT-DDoS-Connect_Flood       1.00      1.00      1.00     14042
+MQTT-DDoS-Publish_Flood       0.87      0.13      0.23      2819
+ MQTT-DoS-Connect_Flood       0.97      0.94      0.96      1049
+ MQTT-DoS-Publish_Flood       0.54      1.00      0.70      2849
+    MQTT-Malformed_Data       0.78      0.65      0.71       585
+                  Recon       0.99      0.92      0.95      9271
+
+               accuracy                           0.77    540751
+              macro avg       0.76      0.74      0.71    540751
+           weighted avg       0.76      0.77      0.74    540751
+
+  Report saved to: report_klcrps_node3_20260429_080451.txt
+
+Done. Best composite score: 0.6053
+Log saved to: C:\Users\sandh\Downloads\CICIoMT\attacks/run_kl_crps16_20260429_080451.txt
+(venv) PS C:\Users\sandh\Downloads\BTP recent codes> 

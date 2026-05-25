@@ -1,0 +1,567 @@
+[V3 — Residual MLP + Attention]  Logging to: D:\Harshini/run_v3_residual_20260504_121410.txt
+TF: 2.15.0
+
+Loading MedSec-25...
+  Reading CSV...
+  Raw shape: (554534, 84)
+  Class distribution:
+    Benign                      12,348  (2.23%)
+    Exfiltration                25,915  (4.67%)
+    Initial access             102,090  (18.41%)
+    Lateral movement            12,498  (2.25%)
+    Reconnaissance             401,683  (72.44%)
+
+Ready — features:105  classes:5
+Model: "ResidualMLP_Attention"
+__________________________________________________________________________________________________
+ Layer (type)                Output Shape                 Param #   Connected to                  
+==================================================================================================
+ input_1 (InputLayer)        [(None, 105)]                0         []                            
+                                                                                                  
+ feature_attention (Dense)   (None, 105)                  11130     ['input_1[0][0]']             
+                                                                                                  
+ attended_features (Multipl  (None, 105)                  0         ['input_1[0][0]',             
+ y)                                                                  'feature_attention[0][0]']   
+                                                                                                  
+ dense (Dense)               (None, 1024)                 108544    ['attended_features[0][0]']   
+                                                                                                  
+ layer_normalization (Layer  (None, 1024)                 2048      ['dense[0][0]']               
+ Normalization)                                                                                   
+                                                                                                  
+ dropout (Dropout)           (None, 1024)                 0         ['layer_normalization[0][0]'] 
+                                                                                                  
+ dense_1 (Dense)             (None, 512)                  524800    ['dropout[0][0]']             
+                                                                                                  
+ layer_normalization_1 (Lay  (None, 512)                  1024      ['dense_1[0][0]']             
+ erNormalization)                                                                                 
+                                                                                                  
+ dropout_1 (Dropout)         (None, 512)                  0         ['layer_normalization_1[0][0]'
+                                                                    ]                             
+                                                                                                  
+ skip1_proj (Dense)          (None, 512)                  53760     ['attended_features[0][0]']   
+                                                                                                  
+ add (Add)                   (None, 512)                  0         ['dropout_1[0][0]',           
+                                                                     'skip1_proj[0][0]']          
+                                                                                                  
+ activation (Activation)     (None, 512)                  0         ['add[0][0]']                 
+                                                                                                  
+ dense_2 (Dense)             (None, 256)                  131328    ['activation[0][0]']          
+                                                                                                  
+ layer_normalization_2 (Lay  (None, 256)                  512       ['dense_2[0][0]']             
+ erNormalization)                                                                                 
+                                                                                                  
+ dropout_2 (Dropout)         (None, 256)                  0         ['layer_normalization_2[0][0]'
+                                                                    ]                             
+                                                                                                  
+ dense_3 (Dense)             (None, 128)                  32896     ['dropout_2[0][0]']           
+                                                                                                  
+ layer_normalization_3 (Lay  (None, 128)                  256       ['dense_3[0][0]']             
+ erNormalization)                                                                                 
+                                                                                                  
+ dropout_3 (Dropout)         (None, 128)                  0         ['layer_normalization_3[0][0]'
+                                                                    ]                             
+                                                                                                  
+ skip2_proj (Dense)          (None, 128)                  65536     ['activation[0][0]']          
+                                                                                                  
+ add_1 (Add)                 (None, 128)                  0         ['dropout_3[0][0]',           
+                                                                     'skip2_proj[0][0]']          
+                                                                                                  
+ activation_1 (Activation)   (None, 128)                  0         ['add_1[0][0]']               
+                                                                                                  
+ dense_4 (Dense)             (None, 5)                    645       ['activation_1[0][0]']        
+                                                                                                  
+==================================================================================================
+Total params: 932479 (3.56 MB)
+Trainable params: 932479 (3.56 MB)
+Non-trainable params: 0 (0.00 Byte)
+__________________________________________________________________________________________________
+
+==============================================================
+  V3 — Residual MLP + Attention | KL+CRPS | MedSec-25
+==============================================================
+
+-- Round 1/30 --
+  Node 1 — ep:1 bs:512 lr:0.00030 loss:2.7329 acc:0.8512 val_acc:0.8983
+  Node 2 — ep:1 bs:512 lr:0.00030 loss:2.8126 acc:0.8498 val_acc:0.9005
+  Node 3 — ep:1 bs:512 lr:0.00030 loss:2.7957 acc:0.8477 val_acc:0.9051
+  Global — mu_acc:0.8895  MacroF1:0.7608  Score:0.2109
+  Below 0.90: ['Benign', 'Exfiltration', 'Initial access', 'Lateral movement']  FloorPenalty:0.6666
+  Benign                    recall:0.725
+  Exfiltration              recall:0.651
+  Initial access            recall:0.690
+  Lateral movement          recall:0.867
+  Reconnaissance            recall:0.962
+  ✓ Best saved — score:0.2109  F1:0.7608
+
+-- Round 2/30 --
+  Node 1 — ep:1 bs:512 lr:0.00030 loss:1.8227 acc:0.8915 val_acc:0.9095
+  Node 2 — ep:4 bs:128 lr:0.00030 loss:1.3379 acc:0.9228 val_acc:0.9309
+  Node 3 — ep:1 bs:512 lr:0.00030 loss:1.8521 acc:0.8899 val_acc:0.9150
+  Global — mu_acc:0.9163  MacroF1:0.8179  Score:0.6367
+  Below 0.90: ['Exfiltration', 'Initial access', 'Lateral movement']  FloorPenalty:0.2336
+  Benign                    recall:0.929
+  Exfiltration              recall:0.740
+  Initial access            recall:0.866
+  Lateral movement          recall:0.861
+  Reconnaissance            recall:0.942
+  ✓ Best saved — score:0.6367  F1:0.8179
+
+-- Round 3/30 --
+  Node 1 — ep:1 bs:512 lr:0.00029 loss:1.4026 acc:0.9195 val_acc:0.9327
+  Node 2 — ep:1 bs:512 lr:0.00029 loss:1.4051 acc:0.9185 val_acc:0.9338
+  Node 3 — ep:4 bs:128 lr:0.00029 loss:1.1482 acc:0.9347 val_acc:0.9426
+  Global — mu_acc:0.9297  MacroF1:0.8492  Score:0.7245
+  Below 0.90: ['Lateral movement']  FloorPenalty:0.1545
+  Benign                    recall:0.951
+  Exfiltration              recall:0.912
+  Initial access            recall:0.910
+  Lateral movement          recall:0.745
+  Reconnaissance            recall:0.938
+  ✓ Best saved — score:0.7245  F1:0.8492
+
+-- Round 4/30 --
+  Node 1 — ep:4 bs:128 lr:0.00029 loss:1.0325 acc:0.9403 val_acc:0.9494
+  Node 2 — ep:1 bs:512 lr:0.00029 loss:1.0788 acc:0.9379 val_acc:0.9411
+  Node 3 — ep:4 bs:138 lr:0.00029 loss:1.0259 acc:0.9409 val_acc:0.9481
+  Global — mu_acc:0.9463  MacroF1:0.8769  Score:0.7345
+  Below 0.90: ['Exfiltration', 'Initial access', 'Lateral movement']  FloorPenalty:0.1739
+  Benign                    recall:0.964
+  Exfiltration              recall:0.839
+  Initial access            recall:0.857
+  Lateral movement          recall:0.830
+  Reconnaissance            recall:0.980
+  ✓ Best saved — score:0.7345  F1:0.8769
+
+-- Round 5/30 --
+  Node 1 — ep:1 bs:512 lr:0.00028 loss:0.8790 acc:0.9484 val_acc:0.9533
+  Node 2 — ep:1 bs:512 lr:0.00028 loss:0.8955 acc:0.9475 val_acc:0.9513
+  Node 3 — ep:4 bs:128 lr:0.00028 loss:0.9169 acc:0.9461 val_acc:0.9545
+  Global — mu_acc:0.9529  MacroF1:0.8908  Score:0.8360
+  Below 0.90: ['Exfiltration', 'Lateral movement']  FloorPenalty:0.0709
+  Benign                    recall:0.972
+  Exfiltration              recall:0.849
+  Initial access            recall:0.912
+  Lateral movement          recall:0.880
+  Reconnaissance            recall:0.974
+  ✓ Best saved — score:0.8360  F1:0.8908
+
+-- Round 6/30 --
+  Node 1 — ep:1 bs:512 lr:0.00027 loss:0.8104 acc:0.9521 val_acc:0.9570
+  Node 2 — ep:4 bs:128 lr:0.00027 loss:0.8689 acc:0.9483 val_acc:0.9562
+  Node 3 — ep:3 bs:278 lr:0.00027 loss:0.8277 acc:0.9505 val_acc:0.9575
+  Global — mu_acc:0.9562  MacroF1:0.8945  Score:0.8831
+  Below 0.90: ['Exfiltration']  FloorPenalty:0.0327
+  Benign                    recall:0.973
+  Exfiltration              recall:0.867
+  Initial access            recall:0.941
+  Lateral movement          recall:0.944
+  Reconnaissance            recall:0.967
+  ✓ Best saved — score:0.8831  F1:0.8945
+
+-- Round 7/30 --
+  Node 1 — ep:1 bs:512 lr:0.00026 loss:0.7483 acc:0.9547 val_acc:0.9593
+  Node 2 — ep:1 bs:460 lr:0.00026 loss:0.7543 acc:0.9547 val_acc:0.9584
+  Node 3 — ep:4 bs:128 lr:0.00026 loss:0.8007 acc:0.9521 val_acc:0.9564
+  Global — mu_acc:0.9603  MacroF1:0.9005  Score:0.8932
+  Below 0.90: ['Exfiltration', 'Lateral movement']  FloorPenalty:0.0211
+  Benign                    recall:0.975
+  Exfiltration              recall:0.880
+  Initial access            recall:0.965
+  Lateral movement          recall:0.899
+  Reconnaissance            recall:0.968
+  ✓ Best saved — score:0.8932  F1:0.9005
+
+-- Round 8/30 --
+  Node 1 — ep:1 bs:512 lr:0.00025 loss:0.7071 acc:0.9572 val_acc:0.9548
+  Node 2 — ep:4 bs:128 lr:0.00025 loss:0.7524 acc:0.9553 val_acc:0.9604
+  Node 3 — ep:1 bs:512 lr:0.00025 loss:0.6967 acc:0.9579 val_acc:0.9645
+  Global — mu_acc:0.9628  MacroF1:0.9020  Score:0.8784
+  Below 0.90: ['Exfiltration']  FloorPenalty:0.0357
+  Benign                    recall:0.977
+  Exfiltration              recall:0.864
+  Initial access            recall:0.963
+  Lateral movement          recall:0.903
+  Reconnaissance            recall:0.971
+  No improvement — patience 1/8
+
+-- Round 9/30 --
+  Node 1 — ep:1 bs:512 lr:0.00024 loss:0.6649 acc:0.9601 val_acc:0.9651
+  Node 2 — ep:3 bs:207 lr:0.00024 loss:0.6830 acc:0.9592 val_acc:0.9619
+  Node 3 — ep:4 bs:128 lr:0.00024 loss:0.7147 acc:0.9577 val_acc:0.9640
+  Global — mu_acc:0.9664  MacroF1:0.9051  Score:0.8985
+  Below 0.90: ['Exfiltration']  FloorPenalty:0.0193
+  Benign                    recall:0.979
+  Exfiltration              recall:0.881
+  Initial access            recall:0.981
+  Lateral movement          recall:0.904
+  Reconnaissance            recall:0.972
+  ✓ Best saved — score:0.8985  F1:0.9051
+
+-- Round 10/30 --
+  Node 1 — ep:1 bs:512 lr:0.00023 loss:0.6200 acc:0.9632 val_acc:0.9692
+  Node 2 — ep:4 bs:160 lr:0.00023 loss:0.6492 acc:0.9613 val_acc:0.9659
+  Node 3 — ep:4 bs:128 lr:0.00023 loss:0.6690 acc:0.9606 val_acc:0.9674
+  Global — mu_acc:0.9677  MacroF1:0.9057  Score:0.9047
+  Below 0.90: ['Exfiltration']  FloorPenalty:0.0158
+  Benign                    recall:0.979
+  Exfiltration              recall:0.884
+  Initial access            recall:0.979
+  Lateral movement          recall:0.920
+  Reconnaissance            recall:0.972
+  ✓ Best saved — score:0.9047  F1:0.9057
+
+-- Round 11/30 --
+  Node 1 — ep:1 bs:512 lr:0.00021 loss:0.5788 acc:0.9656 val_acc:0.9697
+  Node 2 — ep:3 bs:290 lr:0.00021 loss:0.5782 acc:0.9655 val_acc:0.9683
+  Node 3 — ep:4 bs:128 lr:0.00021 loss:0.6388 acc:0.9621 val_acc:0.9656
+  Global — mu_acc:0.9700  MacroF1:0.9093  Score:0.9153
+  Below 0.90: ['Exfiltration']  FloorPenalty:0.0076
+  Benign                    recall:0.979
+  Exfiltration              recall:0.892
+  Initial access            recall:0.985
+  Lateral movement          recall:0.921
+  Reconnaissance            recall:0.973
+  ✓ Best saved — score:0.9153  F1:0.9093
+
+-- Round 12/30 --
+  Node 1 — ep:1 bs:512 lr:0.00020 loss:0.5514 acc:0.9670 val_acc:0.9695
+  Node 2 — ep:1 bs:512 lr:0.00020 loss:0.5385 acc:0.9686 val_acc:0.9679
+  Node 3 — ep:4 bs:128 lr:0.00020 loss:0.6154 acc:0.9637 val_acc:0.9684
+  Global — mu_acc:0.9710  MacroF1:0.9107  Score:0.9242
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.982
+  Exfiltration              recall:0.900
+  Initial access            recall:0.986
+  Lateral movement          recall:0.919
+  Reconnaissance            recall:0.973
+  ✓ Best saved — score:0.9242  F1:0.9107
+
+-- Round 13/30 --
+  Node 1 — ep:1 bs:512 lr:0.00019 loss:0.5332 acc:0.9679 val_acc:0.9706
+  Node 2 — ep:1 bs:512 lr:0.00019 loss:0.5264 acc:0.9688 val_acc:0.9725
+  Node 3 — ep:4 bs:128 lr:0.00019 loss:0.5947 acc:0.9648 val_acc:0.9713
+  Global — mu_acc:0.9719  MacroF1:0.9115  Score:0.9240
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.983
+  Exfiltration              recall:0.900
+  Initial access            recall:0.987
+  Lateral movement          recall:0.914
+  Reconnaissance            recall:0.974
+  No improvement — patience 1/8
+
+-- Round 14/30 --
+  Node 1 — ep:1 bs:488 lr:0.00017 loss:0.5307 acc:0.9683 val_acc:0.9719
+  Node 2 — ep:1 bs:512 lr:0.00017 loss:0.5193 acc:0.9688 val_acc:0.9734
+  Node 3 — ep:4 bs:128 lr:0.00017 loss:0.5630 acc:0.9667 val_acc:0.9707
+  Global — mu_acc:0.9725  MacroF1:0.9122  Score:0.9243
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.982
+  Exfiltration              recall:0.901
+  Initial access            recall:0.988
+  Lateral movement          recall:0.914
+  Reconnaissance            recall:0.975
+  ✓ Best saved — score:0.9243  F1:0.9122
+
+-- Round 15/30 --
+  Node 1 — ep:1 bs:512 lr:0.00015 loss:0.5118 acc:0.9697 val_acc:0.9709
+  Node 2 — ep:1 bs:512 lr:0.00015 loss:0.5072 acc:0.9700 val_acc:0.9741
+  Node 3 — ep:4 bs:128 lr:0.00015 loss:0.5500 acc:0.9673 val_acc:0.9722
+  Global — mu_acc:0.9742  MacroF1:0.9159  Score:0.9279
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.985
+  Exfiltration              recall:0.916
+  Initial access            recall:0.988
+  Lateral movement          recall:0.905
+  Reconnaissance            recall:0.976
+  ✓ Best saved — score:0.9279  F1:0.9159
+
+-- Round 16/30 --
+  Node 1 — ep:1 bs:512 lr:0.00014 loss:0.4944 acc:0.9706 val_acc:0.9727
+  Node 2 — ep:1 bs:512 lr:0.00014 loss:0.4887 acc:0.9711 val_acc:0.9730
+  Node 3 — ep:4 bs:128 lr:0.00014 loss:0.5447 acc:0.9677 val_acc:0.9729
+  Global — mu_acc:0.9744  MacroF1:0.9170  Score:0.9308
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.989
+  Exfiltration              recall:0.923
+  Initial access            recall:0.988
+  Lateral movement          recall:0.909
+  Reconnaissance            recall:0.976
+  ✓ Best saved — score:0.9308  F1:0.9170
+
+-- Round 17/30 --
+  Node 1 — ep:1 bs:512 lr:0.00012 loss:0.4829 acc:0.9713 val_acc:0.9726
+  Node 2 — ep:1 bs:512 lr:0.00012 loss:0.4818 acc:0.9714 val_acc:0.9752
+  Node 3 — ep:4 bs:128 lr:0.00012 loss:0.5169 acc:0.9695 val_acc:0.9732
+  Global — mu_acc:0.9750  MacroF1:0.9187  Score:0.9323
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.989
+  Exfiltration              recall:0.929
+  Initial access            recall:0.989
+  Lateral movement          recall:0.909
+  Reconnaissance            recall:0.977
+  ✓ Best saved — score:0.9323  F1:0.9187
+
+-- Round 18/30 --
+  Node 1 — ep:1 bs:512 lr:0.00011 loss:0.4724 acc:0.9720 val_acc:0.9729
+  Node 2 — ep:1 bs:512 lr:0.00011 loss:0.4681 acc:0.9721 val_acc:0.9756
+  Node 3 — ep:4 bs:128 lr:0.00011 loss:0.5118 acc:0.9697 val_acc:0.9743
+  Global — mu_acc:0.9748  MacroF1:0.9169  Score:0.9312
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.989
+  Exfiltration              recall:0.923
+  Initial access            recall:0.990
+  Lateral movement          recall:0.910
+  Reconnaissance            recall:0.976
+  No improvement — patience 1/8
+
+-- Round 19/30 --
+  Node 1 — ep:1 bs:512 lr:0.00010 loss:0.4663 acc:0.9724 val_acc:0.9745
+  Node 2 — ep:1 bs:512 lr:0.00010 loss:0.4612 acc:0.9723 val_acc:0.9748
+  Node 3 — ep:4 bs:128 lr:0.00010 loss:0.4902 acc:0.9712 val_acc:0.9727
+  Global — mu_acc:0.9753  MacroF1:0.9174  Score:0.9336
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.990
+  Exfiltration              recall:0.927
+  Initial access            recall:0.990
+  Lateral movement          recall:0.915
+  Reconnaissance            recall:0.976
+  ✓ Best saved — score:0.9336  F1:0.9174
+
+-- Round 20/30 --
+  Node 1 — ep:1 bs:512 lr:0.00008 loss:0.4556 acc:0.9728 val_acc:0.9743
+  Node 2 — ep:1 bs:512 lr:0.00008 loss:0.4548 acc:0.9727 val_acc:0.9734
+  Node 3 — ep:4 bs:128 lr:0.00008 loss:0.4848 acc:0.9715 val_acc:0.9758
+  Global — mu_acc:0.9753  MacroF1:0.9162  Score:0.9329
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.990
+  Exfiltration              recall:0.923
+  Initial access            recall:0.990
+  Lateral movement          recall:0.916
+  Reconnaissance            recall:0.976
+  No improvement — patience 1/8
+
+-- Round 21/30 --
+  Node 1 — ep:2 bs:420 lr:0.00007 loss:0.4503 acc:0.9731 val_acc:0.9746
+  Node 2 — ep:1 bs:512 lr:0.00007 loss:0.4481 acc:0.9731 val_acc:0.9747
+  Node 3 — ep:4 bs:128 lr:0.00007 loss:0.4719 acc:0.9721 val_acc:0.9750
+  Global — mu_acc:0.9756  MacroF1:0.9175  Score:0.9342
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.990
+  Exfiltration              recall:0.929
+  Initial access            recall:0.990
+  Lateral movement          recall:0.916
+  Reconnaissance            recall:0.976
+  ✓ Best saved — score:0.9342  F1:0.9175
+
+-- Round 22/30 --
+  Node 1 — ep:1 bs:512 lr:0.00006 loss:0.4430 acc:0.9734 val_acc:0.9744
+  Node 2 — ep:1 bs:512 lr:0.00006 loss:0.4406 acc:0.9737 val_acc:0.9764
+  Node 3 — ep:4 bs:128 lr:0.00006 loss:0.4568 acc:0.9733 val_acc:0.9756
+  Global — mu_acc:0.9761  MacroF1:0.9185  Score:0.9340
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.989
+  Exfiltration              recall:0.931
+  Initial access            recall:0.991
+  Lateral movement          recall:0.914
+  Reconnaissance            recall:0.977
+  No improvement — patience 1/8
+
+-- Round 23/30 --
+  Node 1 — ep:1 bs:512 lr:0.00005 loss:0.4338 acc:0.9742 val_acc:0.9740
+  Node 2 — ep:1 bs:512 lr:0.00005 loss:0.4357 acc:0.9738 val_acc:0.9748
+  Node 3 — ep:4 bs:128 lr:0.00005 loss:0.4541 acc:0.9733 val_acc:0.9763
+  Global — mu_acc:0.9759  MacroF1:0.9176  Score:0.9351
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.990
+  Exfiltration              recall:0.922
+  Initial access            recall:0.991
+  Lateral movement          recall:0.922
+  Reconnaissance            recall:0.977
+  ✓ Best saved — score:0.9351  F1:0.9176
+
+-- Round 24/30 --
+  Node 1 — ep:1 bs:512 lr:0.00004 loss:0.4296 acc:0.9743 val_acc:0.9736
+  Node 2 — ep:1 bs:512 lr:0.00004 loss:0.4277 acc:0.9744 val_acc:0.9767
+  Node 3 — ep:4 bs:128 lr:0.00004 loss:0.4424 acc:0.9741 val_acc:0.9758
+  Global — mu_acc:0.9763  MacroF1:0.9181  Score:0.9348
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.990
+  Exfiltration              recall:0.931
+  Initial access            recall:0.992
+  Lateral movement          recall:0.916
+  Reconnaissance            recall:0.977
+  No improvement — patience 1/8
+
+-- Round 25/30 --
+  Node 1 — ep:1 bs:512 lr:0.00003 loss:0.4246 acc:0.9745 val_acc:0.9746
+  Node 2 — ep:1 bs:512 lr:0.00003 loss:0.4266 acc:0.9742 val_acc:0.9767
+  Node 3 — ep:4 bs:128 lr:0.00003 loss:0.4340 acc:0.9745 val_acc:0.9763
+  Global — mu_acc:0.9767  MacroF1:0.9190  Score:0.9349
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.991
+  Exfiltration              recall:0.931
+  Initial access            recall:0.992
+  Lateral movement          recall:0.915
+  Reconnaissance            recall:0.977
+  No improvement — patience 2/8
+
+-- Round 26/30 --
+  Node 1 — ep:1 bs:512 lr:0.00002 loss:0.4225 acc:0.9748 val_acc:0.9750
+  Node 2 — ep:1 bs:512 lr:0.00002 loss:0.4221 acc:0.9748 val_acc:0.9765
+  Node 3 — ep:4 bs:128 lr:0.00002 loss:0.4301 acc:0.9748 val_acc:0.9767
+  Global — mu_acc:0.9768  MacroF1:0.9195  Score:0.9348
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.991
+  Exfiltration              recall:0.931
+  Initial access            recall:0.993
+  Lateral movement          recall:0.914
+  Reconnaissance            recall:0.978
+  No improvement — patience 3/8
+
+-- Round 27/30 --
+  Node 1 — ep:1 bs:512 lr:0.00002 loss:0.4170 acc:0.9749 val_acc:0.9758
+  Node 2 — ep:1 bs:512 lr:0.00002 loss:0.4183 acc:0.9751 val_acc:0.9767
+  Node 3 — ep:4 bs:128 lr:0.00002 loss:0.4263 acc:0.9751 val_acc:0.9765
+  Global — mu_acc:0.9768  MacroF1:0.9192  Score:0.9351
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.991
+  Exfiltration              recall:0.931
+  Initial access            recall:0.993
+  Lateral movement          recall:0.915
+  Reconnaissance            recall:0.978
+  No improvement — patience 4/8
+
+-- Round 28/30 --
+  Node 1 — ep:1 bs:512 lr:0.00001 loss:0.4175 acc:0.9749 val_acc:0.9752
+  Node 2 — ep:1 bs:512 lr:0.00001 loss:0.4176 acc:0.9752 val_acc:0.9765
+  Node 3 — ep:4 bs:128 lr:0.00001 loss:0.4219 acc:0.9753 val_acc:0.9770
+  Global — mu_acc:0.9769  MacroF1:0.9190  Score:0.9350
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.991
+  Exfiltration              recall:0.931
+  Initial access            recall:0.993
+  Lateral movement          recall:0.915
+  Reconnaissance            recall:0.978
+  No improvement — patience 5/8
+
+-- Round 29/30 --
+  Node 1 — ep:1 bs:512 lr:0.00001 loss:0.4155 acc:0.9751 val_acc:0.9748
+  Node 2 — ep:1 bs:512 lr:0.00001 loss:0.4132 acc:0.9751 val_acc:0.9764
+  Node 3 — ep:4 bs:128 lr:0.00001 loss:0.4200 acc:0.9755 val_acc:0.9774
+  Global — mu_acc:0.9768  MacroF1:0.9187  Score:0.9352
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.991
+  Exfiltration              recall:0.931
+  Initial access            recall:0.992
+  Lateral movement          recall:0.916
+  Reconnaissance            recall:0.977
+  ✓ Best saved — score:0.9352  F1:0.9187
+
+-- Round 30/30 --
+  Node 1 — ep:1 bs:512 lr:0.00001 loss:0.4147 acc:0.9752 val_acc:0.9743
+  Node 2 — ep:1 bs:512 lr:0.00001 loss:0.4123 acc:0.9754 val_acc:0.9769
+  Node 3 — ep:4 bs:128 lr:0.00001 loss:0.4188 acc:0.9755 val_acc:0.9774
+  Global — mu_acc:0.9770  MacroF1:0.9191  Score:0.9350
+  Below 0.90: []  FloorPenalty:0.0000
+  Benign                    recall:0.991
+  Exfiltration              recall:0.931
+  Initial access            recall:0.993
+  Lateral movement          recall:0.915
+  Reconnaissance            recall:0.978
+  No improvement — patience 1/8
+
+=== Per-Node Threshold Calibration ===
+
+  Node 1:
+    Benign                    threshold:0.50  recall:0.9914
+    Exfiltration              threshold:0.50  recall:0.9310
+    Initial access            threshold:0.50  recall:0.9920
+    Lateral movement          threshold:0.50  recall:0.9164
+    Reconnaissance            threshold:0.50  recall:0.9774
+
+  Node 2:
+    Benign                    threshold:0.50  recall:0.9903
+    Exfiltration              threshold:0.50  recall:0.9194
+    Initial access            threshold:0.50  recall:0.9924
+    Lateral movement          threshold:0.50  recall:0.9189
+    Reconnaissance            threshold:0.50  recall:0.9795
+
+  Node 3:
+    Benign                    threshold:0.50  recall:0.9903
+    Exfiltration              threshold:0.50  recall:0.9096
+    Initial access            threshold:0.50  recall:0.9925
+    Lateral movement          threshold:0.50  recall:0.9140
+    Reconnaissance            threshold:0.50  recall:0.9769
+
+=== Final Evaluation ===
+
+=== Node 1 — Classification Report ===
+                  precision    recall  f1-score   support
+
+          Benign       0.94      0.99      0.97       815
+    Exfiltration       0.91      0.93      0.92      1710
+  Initial access       0.99      0.99      0.99      6738
+Lateral movement       0.61      0.92      0.73       825
+  Reconnaissance       1.00      0.98      0.99     26512
+
+        accuracy                           0.98     36600
+       macro avg       0.89      0.96      0.92     36600
+    weighted avg       0.98      0.98      0.98     36600
+
+=== Node 1 — Per-class FNPR ===
+  Class                         Recall     FNPR
+  ----------------------------------------------
+  Benign                        0.9914   0.0086  ✅
+  Exfiltration                  0.9310   0.0690  ✅
+  Initial access                0.9920   0.0080  ✅
+  Lateral movement              0.9164   0.0836  ✅
+  Reconnaissance                0.9774   0.0226  ✅
+  Report → D:\Harshini/report_v3_node1_20260504_121410.txt
+
+=== Node 2 — Classification Report ===
+                  precision    recall  f1-score   support
+
+          Benign       0.94      0.99      0.97       827
+    Exfiltration       0.92      0.92      0.92      1736
+  Initial access       0.99      0.99      0.99      6840
+Lateral movement       0.62      0.92      0.74       838
+  Reconnaissance       1.00      0.98      0.99     26912
+
+        accuracy                           0.98     37153
+       macro avg       0.89      0.96      0.92     37153
+    weighted avg       0.98      0.98      0.98     37153
+
+=== Node 2 — Per-class FNPR ===
+  Class                         Recall     FNPR
+  ----------------------------------------------
+  Benign                        0.9903   0.0097  ✅
+  Exfiltration                  0.9194   0.0806  ✅
+  Initial access                0.9924   0.0076  ✅
+  Lateral movement              0.9189   0.0811  ✅
+  Reconnaissance                0.9795   0.0205  ✅
+  Report → D:\Harshini/report_v3_node2_20260504_121410.txt
+
+=== Node 3 — Classification Report ===
+                  precision    recall  f1-score   support
+
+          Benign       0.94      0.99      0.97       827
+    Exfiltration       0.90      0.91      0.91      1737
+  Initial access       0.99      0.99      0.99      6840
+Lateral movement       0.60      0.91      0.72       837
+  Reconnaissance       1.00      0.98      0.99     26913
+
+        accuracy                           0.98     37154
+       macro avg       0.89      0.96      0.91     37154
+    weighted avg       0.98      0.98      0.98     37154
+
+=== Node 3 — Per-class FNPR ===
+  Class                         Recall     FNPR
+  ----------------------------------------------
+  Benign                        0.9903   0.0097  ✅
+  Exfiltration                  0.9096   0.0904  ✅
+  Initial access                0.9925   0.0075  ✅
+  Lateral movement              0.9140   0.0860  ✅
+  Reconnaissance                0.9769   0.0231  ✅
+  Report → D:\Harshini/report_v3_node3_20260504_121410.txt
+
+Done. Best composite score: 0.9352
